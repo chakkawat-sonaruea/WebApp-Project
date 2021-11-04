@@ -1,0 +1,62 @@
+/* topbar */
+#topbar-list {
+    margin: 0;
+    background-color: #333;
+    height: 32px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 5fr;
+
+    list-style-type: none;
+}
+
+#topbar-list li {
+    display: grid;
+}
+
+#topbar-list a {
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+#topbar-list a:hover {
+    background-color: #111;
+}
+
+/* main content */
+.container {
+    width: 100%;
+    height: 100vh;
+    background-color: lightblue;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.content-left {
+    display: grid;
+    background-color: whitesmoke;
+}
+
+.content-right {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr;
+
+    background-color: whitesmoke;
+}
+
+/* map chart */
+#map-chart {
+    position: relative;
+    /* left: -38vh; */
+    margin-top: 10px;
+    width: 50vw;
+    height: 50vh;
+    background-color: inherit;
+}
