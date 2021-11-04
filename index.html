@@ -5,205 +5,241 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- css -->
-    <link rel="stylesheet" href="./styles/normalize.css">
+    <!-- <link rel="stylesheet" href="./styles/reset.css"> -->
     <link rel="stylesheet" href="./styles/style.css">
-    <!-- script -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    <title>Covid Stats</title>
+    <!-- Catamaren Font Thin-100, Light-300, Regular-400, Medium-500, Bold-700 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100;300;400;500;700&display=swap" rel="stylesheet">
 
-    <style>
-    </style>
+    <!-- Prompt Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500&display=swap" rel="stylesheet">
+
+    <title>Covid19 Stats</title>
+
+    <!-- https://covid19.ddc.moph.go.th/ -->
 </head>
 
 <body>
-    <ul id="topbar-list">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="">Line Lists</a>
-        <li><a href="">About</a></li>
-    </ul>
 
-    <div class="container">
-        <div class="content-left">
-            <div style="color: royalblue"> f</div>
-        </div>
-        <div class="content-right">
-            <div id="map-chart"></div>
-        </div>
+    <h2>Covid Tracker</h2>
+    <center>
+        <p>Today new case: </p>
+        </br>
+        <p id="today-case"></p>
+        <br>
+        <p>Yesterday new case: </p>
+        </br>
+        <p id="yesterday-case"></p><br>
+    </center>
+    </br>
+    <div>
+        <form>
+            <div id="auto-complete">
+                <input id="country-input" type="text" placeholder="country">
+            </div>
+            <input type="date" name="" id="data-pick">
+            <input id="submit-button" type="submit" value="show data">
+
+        </form>
     </div>
 </body>
 
 <script>
-    provinceNames = {
-        "TH-10": "กรุงเทพมหานคร",
-        "TH-11": "สมุทรปราการ",
-        "TH-12": "นนทบุรี",
-        "TH-13": "ปทุมธานี",
-        "TH-14": "พระนครศรีอยุธยา",
-        "TH-15": "อ่างทอง",
-        "TH-16": "ลพบุรี",
-        "TH-17": "สิงห์บุรี",
-        "TH-18": "ชัยนาท",
-        "TH-19": "สระบุรี",
-        "TH-20": "ชลบุรี",
-        "TH-21": "ระยอง",
-        "TH-22": "จันทบุรี",
-        "TH-23": "ตราด",
-        "TH-24": "ฉะเชิงเทรา",
-        "TH-25": "ปราจีนบุรี",
-        "TH-26": "นครนายก",
-        "TH-27": "สระแก้ว",
-        "TH-30": "นครราชสีมา",
-        "TH-31": "บุรีรัมย์",
-        "TH-32": "สุรินทร์",
-        "TH-33": "ศรีสะเกษ",
-        "TH-34": "อุบลราชธานี",
-        "TH-35": "ยโสธร",
-        "TH-36": "ชัยภูมิ",
-        "TH-37": "อำนาจเจริญ",
-        "TH-38": "บึงกาฬ",
-        "TH-39": "หนองบัวลำภู",
-        "TH-40": "ขอนแก่น",
-        "TH-41": "อุดรธานี",
-        "TH-42": "เลย",
-        "TH-43": "หนองคาย",
-        "TH-44": "มหาสารคาม",
-        "TH-45": "ร้อยเอ็ด",
-        "TH-46": "กาฬสินธุ์",
-        "TH-47": "สกลนคร",
-        "TH-48": "นครพนม",
-        "TH-49": "มุกดาหาร",
-        "TH-50": "เชียงใหม่",
-        "TH-51": "ลำพูน",
-        "TH-52": "ลำปาง",
-        "TH-53": "อุตรดิตถ์",
-        "TH-54": "แพร่",
-        "TH-55": "น่าน",
-        "TH-56": "พะเยา",
-        "TH-57": "เชียงราย",
-        "TH-58": "แม่ฮ่องสอน",
-        "TH-60": "นครสวรรค์",
-        "TH-61": "อุทัยธานี",
-        "TH-62": "กำแพงเพชร",
-        "TH-63": "ตาก",
-        "TH-64": "สุโขทัย",
-        "TH-65": "พิษณุโลก",
-        "TH-66": "พิจิตร",
-        "TH-67": "เพชรบูรณ์",
-        "TH-70": "ราชบุรี",
-        "TH-71": "กาญจนบุรี",
-        "TH-72": "สุพรรณบุรี",
-        "TH-73": "นครปฐม",
-        "TH-74": "สมุทรสาคร",
-        "TH-75": "สมุทรสงคราม",
-        "TH-76": "เพชรบุรี",
-        "TH-77": "ประจวบคีรีขันธ์",
-        "TH-80": "นครศรีธรรมราช",
-        "TH-81": "กระบี่",
-        "TH-82": "พังงา",
-        "TH-83": "ภูเก็ต",
-        "TH-84": "สุราษฎร์ธานี",
-        "TH-85": "ระนอง",
-        "TH-86": "ชุมพร",
-        "TH-90": "สงขลา",
-        "TH-91": "สตูล",
-        "TH-92": "ตรัง",
-        "TH-93": "พัทลุง",
-        "TH-94": "ปัตตานี",
-        "TH-95": "ยะลา",
-        "TH-96": "นราธิวาส",
-    };
+    /* api section */
+    const todayCaseURL = "https://covid19.ddc.moph.go.th/api/Cases/today-cases-all"
+    const timelineCaseeURL = "https://covid19.ddc.moph.go.th/api/Cases/timeline-cases-all"
+    const stats = document.getElementById("stats");
+    const submitButton = document.getElementById("submit-button");
+    const todayCase = document.getElementById("today-case");
+    const yesterdayCase = document.getElementById("yesterday-case");
+    const endl = "\n";
 
-    let chart, data;
-    let provinceData = [
-        ['Province', 'new case'],
-    ];
-    const options = {
-        region: "TH",
-        resolution: "provinces",
-        backgroundColor: "#81d4fa",
-        colorAxis: {
-            colors: ["white", "red"]
-        },
-        datalessRegionColor: "#81d4fa",
-        // width: 1200,
-        keepAspectRatio: true,
 
-    };
+    /*
+    function getTimelineStats() {
+        fetch(timelineCaseeURL)
+            .then(responseToJSON)
+            .then(reverseObject)
+            .then(data => {
+                let today = data[0],
+                    yesterday = data[1];
+                updateTextContent("new-case", today.new_case);
+                updateTextContent("yesterday-new-case", yesterday.new_case);
 
-    const loadGeochart = new Promise(resolve => {
-        console.log("loading geochart")
-        google.charts.load('current', {
-            'packages': ['geochart'],
-            callback: resolve,
-        });
+            })
+            .then(data => {
+                console.log(data)
+            })
+    }
+
+    getTimelineStats();
+    */
+    let timelineStats;
+
+    function getTimelineStats() {
+        return fetch(timelineCaseeURL)
+            .then(responseToJSON)
+            .then(reverseObject)
+            .then(data => {
+                updateTextContent("today-case", data[0].new_case);
+                updateTextContent("yesterday-case", data[1].new_case);
+            })
+            .then(data => {
+                return data
+            })
+    }
+
+    function printRequest(url) {
+        fetch(url)
+            .then(responseToJSON)
+            .then(console.log(data))
+    }
+
+    timelineStats = getTimelineStats();
+
+    console.log(timelineStats);
+    submitButton.addEventListener("click", e => {
+        console.log(timelineStats)
+        today = timelineStats[0]
+        yesterday = timelineStats[1]
+        // message =
+        // "Today new case :" + " " + today.new_case + endl +
+        // "Yesterday new case :" + " " + yesterday.new_case + endl
+        alert(message)
     })
 
-    Promise
-        .all([loadGeochart, getTodayStats()])
-        .then(drawRegionsMap)
 
-
-    function checkProvinece(xs, name) {
-        console.log(xs)
-        console.log(xs.flatMap(x => x))
+    function responseToJSON(r) {
+        return r.json()
     }
 
-    checkProvinece(provinceData)
-
-    // async
-    function drawRegionsMap() {
-        console.log("draw time")
-        console.log(provinceData)
-        chart = new google.visualization.GeoChart(document.getElementById('map-chart'));
-
-        data = google.visualization.arrayToDataTable(provinceData);
-        chart.draw(data, options);
-
-
-        console.log("befroe drawing chart ");
-        console.log(provinceData)
-
-
-        google.visualization.events.addListener(chart, 'regionClick', e => {
-            provinceData.find(x => {
-                // if (x[1] == e.region)
-                // console.log(e)
-                // console.log(e)
-            })
-        });
+    function reverseObject(object) {
+        return object.reverse()
     }
 
-    //async
-    function getTodayStats() {
-        url = "https://covid19.ddc.moph.go.th/api/Cases/today-cases-by-provinces"
-        console.log("get e")
-        return fetch(url)
-            .then(r => r.json())
-            .then(eachDay => eachDay.map(eachProvince))
-
-        function eachProvince(province) {
-            provinceData.push([
-                province.province, province.new_case
-            ])
-
-            return province
-        }
-
+    function updateTextContent(id, data) {
+        element = document.getElementById(id);
+        if (element.textContent == null)
+            element.textContent = data
+        else
+            element.textContent += " " + data
 
     }
 
+    /* autoComplete Input section */
+    const thaiCountries = [
+        "เชียงราย",
+        "เชียงใหม่",
+        "น่าน",
+        "พะเยา",
+        "แพร่",
+        "แม่ฮ่องสอน",
+        "ลำปาง",
+        "ลำพูน",
+        "อุตรดิตถ์",
+        "กาฬสินธุ์",
+        "ขอนแก่น",
+        "ชัยภูมิ",
+        "นครพนม",
+        "นครราชสีมา",
+        "บึงกาฬ",
+        "บุรีรัมย์",
+        "มหาสารคาม",
+        "มุกดาหาร",
+        "ยโสธร",
+        "ร้อยเอ็ด",
+        "เลย",
+        "สกลนคร",
+        "สุรินทร์",
+        "ศรีสะเกษ",
+        "หนองคาย",
+        "หนองบัวลำภู",
+        "อุดรธานี",
+        "อุบลราชธานี",
+        "อำนาจเจริญ",
+        "กำแพงเพชร",
+        "ชัยนาท",
+        "นครนายก",
+        "นครปฐม",
+        "นครสวรรค์",
+        "นนทบุรี",
+        "ปทุมธานี",
+        "พระนครศรีอยุธยา",
+        "พิจิตร",
+        "พิษณุโลก",
+        "เพชรบูรณ์",
+        "ลพบุรี",
+        "สมุทรปราการ",
+        "สมุทรสงคราม",
+        "สมุทรสาคร",
+        "สิงห์บุรี",
+        "สุโขทัย",
+        "สุพรรณบุรี",
+        "สระบุรี",
+        "อ่างทอง",
+        "อุทัยธานี",
+        "จันทบุรี",
+        "ฉะเชิงเทรา",
+        "ชลบุรี",
+        "ตราด",
+        "ปราจีนบุรี",
+        "ระยอง",
+        "สระแก้ว",
+        "กาญจนบุรี",
+        "ตาก",
+        "ประจวบคีรีขันธ์",
+        "เพชรบุรี",
+        "ราชบุรี",
+        "กระบี่",
+        "ชุมพร",
+        "ตรัง",
+        "นครศรีธรรมราช",
+        "นราธิวาส",
+        "ปัตตานี",
+        "พังงา",
+        "พัทลุง",
+        "ภูเก็ต",
+        "ระนอง",
+        "สตูล",
+        "สงขลา",
+        "สุราษฎร์ธานี",
+        "ยะล",
+    ]
 
-    window.addEventListener('resize', drawChart)
+    const countryInput = document.getElementById("country-input")
+    const autoCompleteList = document.createElement("div");
+    const autoComplete = document.getElementById("auto-complete");
+    countryInput.addEventListener("input", reactToInput)
+    autoCompleteList.setAttribute("class", "auto-complete-list");
+    autoComplete.appendChild(autoCompleteList)
 
-    function drawChart() {
-        chart.draw(data, options);
+    function reactToInput(event) {
+        clearSuggestion()
+        if (this.value == "" || this.value == null)
+            return
+        let result = thaiCountries
+            .filter(countryName => countryName.includes(this.value))
+            .forEach(createSuggestion)
+        console.log(result)
+
     }
 
-    function fst(x) {
-        return x[0];
+    function clearSuggestion() {
+        suggestions = document.querySelectorAll(".auto-complete-items");
+        suggestions.forEach(e => autoCompleteList.removeChild(e))
     }
+
+    function createSuggestion(suggestionName) {
+        suggestionItem = document.createElement("div");
+        suggestionItem.setAttribute("class", "auto-complete-items")
+        suggestionItem.textContent = suggestionName;
+        autoCompleteList.appendChild(suggestionItem);
+    }
+    // https://stackoverflow.com/questions/10576905/how-to-convert-javascript-unicode-notation-code-to-utf-8
 </script>
 
 </html>
