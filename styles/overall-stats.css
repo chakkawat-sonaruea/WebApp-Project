@@ -1,0 +1,133 @@
+.stats-section {
+    margin: 2em auto;
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    row-gap: 12px;
+    column-gap: 18px;
+
+}
+
+.stats-section>* {
+    border-radius: 8px;
+    height: 8em;
+    border: 1px solid black;
+}
+
+.total-case {
+    padding: 6px;
+    display: grid;
+    align-items: center;
+    background-color: lightpink;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.total-case>* {
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+}
+
+.total-case>.type-label {
+    font-weight: 700;
+    font-size: 1.5em;
+    justify-content: flex-end;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.total-case>.today-case-number {
+    height: 80%;
+    font-size: 1.2em;
+    border-radius: 6px;
+    justify-content: center;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    background-color: palevioletred;
+}
+
+.total-case>.total-case-number {
+    justify-content: center;
+    font-size: 3.6em;
+    grid-column-start: 4;
+    grid-column-end: 11;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.recovering-case,
+.recovered-case,
+.death-case {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+}
+
+.stats-section>.total-case~*>* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 33%;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.stats-section>.total-case~*>.type-label {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.stats-section>.total-case~*>.total-case-number {
+    font-size: 2em;
+}
+
+.stats-section>.total-case~*>.today-case-number {
+    flex-basis: 20%;
+    flex-shrink: 1;
+    width: 80%;
+    border-radius: 6px;
+}
+
+.recovering-case>.today-case-number {
+    background-color: darkkhaki;
+}
+
+.recovered-case>.today-case-number {
+    background-color: darkgreen;
+}
+
+.death-case>.today-case-number {
+    color: white;
+    background-color: dimgray;
+}
+
+.death-case>.total-case-number,
+.death-case>.type-label {
+    color: lightgoldenrodyellow;
+}
+
+.recovering-case {
+    background-color: yellow;
+}
+
+.recovered-case {
+    background-color: mediumseagreen;
+}
+
+.death-case {
+    background-color: gray;
+}
+
+.chart-container {
+    margin: 0 auto;
+    width: 30rem;
+}

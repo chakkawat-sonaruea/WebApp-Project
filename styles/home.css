@@ -1,0 +1,19 @@
+* {
+    font-family: 'Prompt', sans-serif;
+}
+
+
+body {
+    background: skyblue;
+}
+
+
+h1 {
+    font-size: 2.2em;
+    text-align: center;
+    margin: 1.4em auto;
+}
+
+#updated {
+    text-align: center;
+}

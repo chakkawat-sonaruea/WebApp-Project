@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="./styles/nav.css">
+    <link rel="stylesheet" href="./styles/overall-stats.css">
+    <link rel="stylesheet" href="./styles/auto-complete.css">
+
+    <link rel="stylesheet" href="./styles/compare-stats.css">
+
+    <script defer src="./scripts/auto-complete.js"></script>
+    <script defer src="./scripts/compare-stats.js"></script>
+
+    <title>Compare stats</title>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <div id="page-name">Covid-19 statistics</div>
+        <a href="./home.html">
+            <div id="nav-home">หน้าหลัก</div>
+        </a>
+        <a href="./statistics.html">
+            <div id="nav-statistics">สถิติ</div>
+        </a>
+        <a href="./compare-stats.html">
+            <div id="nav-compare-stats">เปรียบเทียบผู้ติดเชื้อ</div>
+        </a>
+        <div></div>
+    </div>
+
+    <h1>เปรียบเทียบผู้ติดเชื้อโควิต-19</h1>
+
+    <main>
+        <div id="date-input">
+            <!-- <p>Pick a date</p> -->
+            <input id="date-picker" type="date">
+        </div>
+
+        <div id="result-section">
+
+            <div id="left-result">
+                <div class="autocomplete" style="width:300px;">
+                    <input class="autocomplete-input" id="left-input" type="text" placeholder="Provinces">
+                </div>
+                <div class="overall-stats">
+                    <div class="stats-section">
+                        <div class="total-case">
+                            <div class="type-label">ผู้ติดเชื้อสะสม</div>
+                            <div class="today-case-number"></div>
+                            <div class="total-case-number"></div>
+                        </div>
+                        <div class="death-case">
+                            <div class="recovering type-label">เสียชีวิต</div>
+                            <div class="total-case-number"></div>
+                            <div class="today-case-number"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="right-result">
+                <div class="autocomplete" style="width:300px;">
+                    <input class="autocomplete-input" id="right-input" type="text" placeholder="Provinces">
+                </div>
+                <div class="overall-stats">
+                    <div class="stats-section">
+                        <div class="total-case">
+                            <div class="type-label">ผู้ติดเชื้อสะสม</div>
+                            <div class="today-case-number"></div>
+                            <div class="total-case-number"></div>
+                        </div>
+                        <div class="death-case">
+                            <div class="recovering type-label">เสียชีวิต</div>
+                            <div class="total-case-number"></div>
+                            <div class="today-case-number"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="submit-container">
+            <button id="submit-compare">เปรียบเทียบ</button>
+        </div>
+
+
+        <div id="result-container">
+
+            <div id="compare-result">
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
